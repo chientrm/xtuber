@@ -7,12 +7,12 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "xtuber",
+    "productName": "XTuber",
     "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": true
     },
     "bundle": {
       "active": true,
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.chientrm.xtuber",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -56,10 +56,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
-        "resizable": true,
+        "height": 220,
+        "resizable": false,
         "title": "XTuber",
-        "width": 800
+        "width": 320
       }
     ]
   }
