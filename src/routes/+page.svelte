@@ -1,2 +1,10 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>XTuber</h1>
+<p>Simple YouTube Downloader</p>
+
+<form>
+	<label>
+		URL:
+		<input name="url" placeholder="https://youtube.com/..." required />
+		<button>Load</button>
+	</label>
+</form>
