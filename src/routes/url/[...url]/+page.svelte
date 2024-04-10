@@ -2,11 +2,10 @@
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import * as Table from '$lib/components/ui/table';
+	import { download } from '$lib/youtube';
 	import { save } from '@tauri-apps/api/dialog';
-	import { emit, listen } from '@tauri-apps/api/event';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { onMount } from 'svelte';
-	import MaterialSymbolsArrowBack from '~icons/material-symbols/arrow-back';
 	import MaterialSymbolsDownload from '~icons/material-symbols/download';
 	import MaterialSymbolsRefresh from '~icons/material-symbols/refresh';
 
@@ -16,22 +15,7 @@
 		const id = $page.url.searchParams.get('v')!;
 		invoking = invoke<YouTube.Video>('load', { id });
 	});
-
-	async function download(index: number, format: YouTube.Format) {
-		const mime = format.mimeType;
-		const ext = mime.includes('/mp4') ? 'mp4' : mime.includes('/webm') ? 'webm' : '';
-		const id = $page.url.searchParams.get('v')!;
-		const path = await save({
-			filters: [{ name: 'Media', extensions: [ext] }]
-		});
-		invoke('download_file', { id, index, path });
-	}
 </script>
-
-<Button href="/" variant="outline" class="mb-4">
-	<MaterialSymbolsArrowBack class="mr-2 h-4 w-4" />
-	Back
-</Button>
 
 {#await invoking}
 	<MaterialSymbolsRefresh class="mr-2 h-4 w-4 animate-spin" />
@@ -66,7 +50,10 @@
 							{/if}
 						</Table.Cell>
 						<Table.Cell class="text-right">
-							<Button variant="secondary" on:click={() => download(i, format)}>
+							<Button
+								variant="secondary"
+								on:click={() => download(video.videoDetails.videoId, i, format)}
+							>
 								<MaterialSymbolsDownload class="mr-2 h-4 w-4" />
 								Download
 							</Button>
