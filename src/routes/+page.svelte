@@ -5,6 +5,15 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	let value = '';
+	const load = () => {
+		const tmp = value.trim();
+		const id = tmp.startsWith('https://youtube.com/watch?v=')
+			? tmp.replaceAll('https://youtube.com/watch?v=', '')
+			: tmp;
+		if (id.length) {
+			goto(`/url?v=${id}`);
+		}
+	};
 </script>
 
 <Card.Root class="max-w-[480px]">
@@ -17,6 +26,6 @@
 		<Input id="url" placeholder="https://youtube.com/..." bind:value />
 	</Card.Content>
 	<Card.Footer class="justify-end">
-		<Button on:click={() => value && goto(`/url/${value}`)}>Load</Button>
+		<Button on:click={load}>Load</Button>
 	</Card.Footer>
 </Card.Root>
