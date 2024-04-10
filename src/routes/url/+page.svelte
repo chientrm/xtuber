@@ -11,7 +11,6 @@
 
 	onMount(() => {
 		const id = $page.url.searchParams.get('v')!;
-		console.log({ id });
 		invoking = invoke<YouTube.Video>('get_info', { id });
 	});
 </script>
