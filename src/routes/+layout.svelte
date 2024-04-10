@@ -1,28 +1,33 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import icon from '$lib/icon.png';
-	import { onMount } from 'svelte';
-	import IcBaselineLaunch from '~icons/ic/baseline-launch';
-	import { listen } from '@tauri-apps/api/event';
+	import MdiEmailNewsletter from '~icons/mdi/email-newsletter';
+	import RiTwitterXFill from '~icons/ri/twitter-x-fill';
+	import BxDonateBlood from '~icons/bx/donate-blood';
 	import '../app.pcss';
-
-	onMount(() => {
-		const unlisten = listen<string >('download_progress', ({ payload }) => {
-			updateProgress(payload )
-		});
-		return () => unlisten.then((f) => f());
-	});
 </script>
 
 <div class="p-4">
-	<Button variant="ghost" href="/">
-		<img src={icon} alt="" class="h-8 w-8" /> XTuber
-	</Button>
-	<slot />
-	<div>
-		&copy; 2024 <Button variant="link" href="https://github.com/chientrm/xtuber" target="_blank">
-			Github
-			<IcBaselineLaunch class="ml-2 h-4 w-4" />
+	<div class="mb-2 flex flex-row">
+		<Button variant="ghost" href="/">
+			<img src={icon} alt="" class="mr-2 h-8 w-8" /> XTuber
+		</Button>
+		<div class="grow" />
+		<Button variant="outline" href="https://x.com/realchientrm" target="_blank">
+			<RiTwitterXFill class="h-4 w-4" />
+		</Button>
+		<Button variant="outline" href="https://chientrm.com" target="_blank" class="ml-2">
+			<MdiEmailNewsletter class="h-4 w-4" />
+		</Button>
+		<Button
+			variant="outline"
+			href="https://www.buymeacoffee.com/chientrm"
+			target="_blank"
+			class="ml-2"
+		>
+			<BxDonateBlood class="mr-2 h-4 w-4" />
+			Donate
 		</Button>
 	</div>
+	<slot />
 </div>

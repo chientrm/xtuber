@@ -1,24 +1,24 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Button } from '$lib/components/ui/button';
+	import Format from '$lib/components/ui/Format.svelte';
 	import * as Table from '$lib/components/ui/table';
-	import { download } from '$lib/youtube';
-	import { save } from '@tauri-apps/api/dialog';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { onMount } from 'svelte';
-	import MaterialSymbolsDownload from '~icons/material-symbols/download';
+	import { slide } from 'svelte/transition';
 	import MaterialSymbolsRefresh from '~icons/material-symbols/refresh';
 
 	let invoking: Promise<YouTube.Video>;
 
 	onMount(() => {
 		const id = $page.url.searchParams.get('v')!;
-		invoking = invoke<YouTube.Video>('load', { id });
+		invoking = invoke<YouTube.Video>('get_info', { id });
 	});
 </script>
 
 {#await invoking}
-	<MaterialSymbolsRefresh class="mr-2 h-4 w-4 animate-spin" />
+	<div class="flex justify-center" transition:slide>
+		<MaterialSymbolsRefresh class="h-8 w-8 animate-spin" />
+	</div>
 {:then video}
 	{#if video}
 		<Table.Root>
@@ -32,33 +32,8 @@
 				</Table.Row>
 			</Table.Header>
 			<Table.Body>
-				{#each video.formats as format, i}
-					<Table.Row>
-						<Table.Cell class="font-medium">{format.mimeType}</Table.Cell>
-						<Table.Cell>
-							{#if format.hasVideo}
-								{format.width} x {format.height}
-							{:else}
-								None
-							{/if}
-						</Table.Cell>
-						<Table.Cell>
-							{#if format.hasAudio}
-								{format.audioQuality}
-							{:else}
-								None
-							{/if}
-						</Table.Cell>
-						<Table.Cell class="text-right">
-							<Button
-								variant="secondary"
-								on:click={() => download(video.videoDetails.videoId, i, format)}
-							>
-								<MaterialSymbolsDownload class="mr-2 h-4 w-4" />
-								Download
-							</Button>
-						</Table.Cell>
-					</Table.Row>
+				{#each video.formats as format, index}
+					<Format videoId={video.videoDetails.videoId} {format} {index} />
 				{/each}
 			</Table.Body>
 		</Table.Root>
