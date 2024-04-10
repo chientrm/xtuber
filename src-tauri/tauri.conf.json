@@ -53,7 +53,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://releases.chientrm.com/xtuber/{{target}}/{{arch}}/{{current_version}}"
+        "https://releases.chientrm.com/xtuber.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJFNDc1QjI0MTg3MDFDODkKUldTSkhIQVlKRnRITHVIb2wrWG9XWVhtVWhKcmNuQlZFdUJUWXFaOHljZkFyeVRJYU4vSWpYQlAK"
