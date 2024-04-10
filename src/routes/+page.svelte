@@ -1,55 +1,22 @@
 <script lang="ts">
-	import { invoke } from '@tauri-apps/api/tauri';
-
-	let url = '';
-	let loading = false;
-	let result = '';
-	let error = '';
-
-	const download = async () => {
-		loading = true;
-		error = '';
-		try {
-			await invoke('download', { url });
-		} catch (e: any) {
-			error = e;
-		}
-		loading = false;
-	};
+	import { goto } from '$app/navigation';
+	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/components/ui/card';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	let value = '';
 </script>
 
-<h1>XTuber</h1>
-<p>Simple YouTube Downloader</p>
-
-<div>
-	<label>
-		URL:
-		<input name="url" placeholder="https://youtube.com/..." bind:value={url} disabled={loading} />
-		<button on:click={download} disabled={loading}>
-			{#if loading}
-				Processing...
-			{:else}
-				Download
-			{/if}
-		</button>
-	</label>
-</div>
-
-{#if error}
-	<span style="color: red">{error}</span>
-{/if}
-
-<span>{result}</span>
-<br />
-&copy; 2024 <a href="https://chientrm.com" target="_blank">chientrm.com</a>
-
-<style>
-	h1,
-	p,
-	div,
-	span {
-		user-select: none;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-	}
-</style>
+<Card.Root class="max-w-[480px]">
+	<Card.Header>
+		<Card.Title>Download</Card.Title>
+		<Card.Description>Simple YouTube Downloader.</Card.Description>
+	</Card.Header>
+	<Card.Content>
+		<Label for="url">Url</Label>
+		<Input id="url" placeholder="https://youtube.com/..." bind:value />
+	</Card.Content>
+	<Card.Footer class="justify-end">
+		<Button on:click={() => value && goto(`/url/${value}`)}>Load</Button>
+	</Card.Footer>
+</Card.Root>

@@ -55,11 +55,11 @@
     },
     "windows": [
       {
+        "minWidth": 720,
+        "minHeight": 480,
         "fullscreen": false,
-        "height": 220,
-        "resizable": false,
-        "title": "XTuber",
-        "width": 320
+        "resizable": true,
+        "title": "XTuber"
       }
     ]
   }
