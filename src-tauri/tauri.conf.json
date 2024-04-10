@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "XTuber",
-    "version": "0.1.0"
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -51,12 +51,19 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+        "https://releases.chientrm.com/xtuber/{{target}}/{{arch}}/{{current_version}}"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJFNDc1QjI0MTg3MDFDODkKUldTSkhIQVlKRnRITHVIb2wrWG9XWVhtVWhKcmNuQlZFdUJUWXFaOHljZkFyeVRJYU4vSWpYQlAK"
     },
     "windows": [
       {
         "minWidth": 720,
         "minHeight": 480,
+        "width": 720,
+        "height": 480,
         "fullscreen": false,
         "resizable": true,
         "title": "XTuber"
