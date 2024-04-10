@@ -7,11 +7,12 @@
 	let value = '';
 	const load = () => {
 		const tmp = value.trim();
-		const id = tmp.startsWith('https://youtube.com/watch?v=')
-			? tmp.replaceAll('https://youtube.com/watch?v=', '')
-			: tmp;
-		if (id.length) {
-			goto(`/url?v=${id}`);
+		if (tmp.length) {
+			const url = new URL(tmp);
+			const v = url.searchParams.get('v');
+			if (v) {
+				goto(`/url?v=${v}`);
+			}
 		}
 	};
 </script>

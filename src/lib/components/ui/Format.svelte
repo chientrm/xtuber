@@ -25,9 +25,7 @@
 		}
 	}
 
-	function open() {
-		invoke('open', { path });
-	}
+	const open = () => invoke('open', { path });
 
 	onMount(() => {
 		const promise = listen(`progress-${videoId}-${index}`, ({ payload }) => {
