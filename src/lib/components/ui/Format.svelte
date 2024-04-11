@@ -8,7 +8,6 @@
 
 	export let id: string;
 	export let format: YouTube.Format;
-	export let ytdlp: string;
 
 	let folder: string | string[] | null = null;
 	let status: 'idle' | 'downloading' | 'downloaded' = 'idle';
@@ -18,7 +17,7 @@
 		if (folder) {
 			status = 'downloading';
 			const fid = format.format_id;
-			invoke('download', { ytdlp, id, fid, folder }).then(() => {
+			invoke('download', { id, fid, folder }).then(() => {
 				status = 'downloaded';
 			});
 		}

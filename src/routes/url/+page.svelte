@@ -7,13 +7,11 @@
 	import { slide } from 'svelte/transition';
 	import MaterialSymbolsRefresh from '~icons/material-symbols/refresh';
 
-	export let data;
-	$: ytdlp = data.ytdlp;
 	let invoking: Promise<YouTube.Video>;
 
 	onMount(() => {
 		const id = $page.url.searchParams.get('v')!;
-		invoking = invoke<YouTube.Video>('get_info', { ytdlp, id });
+		invoking = invoke<YouTube.Video>('get_info', { id });
 	});
 </script>
 
@@ -36,7 +34,7 @@
 			</Table.Header>
 			<Table.Body>
 				{#each video.formats as format}
-					<Format id={video.id} {format} {ytdlp} />
+					<Format id={video.id} {format} />
 				{/each}
 			</Table.Body>
 		</Table.Root>

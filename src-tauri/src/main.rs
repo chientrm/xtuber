@@ -1,15 +1,21 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use open;
 use std::path::PathBuf;
+
+use open;
+use tauri::{Manager, State};
 use youtube_dl::{SingleVideo, YoutubeDl};
 
+struct AppState {
+    ytdlp: PathBuf,
+}
+
 #[tauri::command]
-async fn get_info(ytdlp: &str, id: &str) -> Result<SingleVideo, String> {
+async fn get_info(id: &str, state: State<'_, AppState>) -> Result<SingleVideo, String> {
     let url = format!("https://youtube.com/watch?v={}", id);
     let output = YoutubeDl::new(url)
-        .youtube_dl_path(ytdlp)
+        .youtube_dl_path(state.ytdlp.clone())
         .socket_timeout("15")
         .run()
         .map_err(|e| e.to_string())
@@ -19,23 +25,20 @@ async fn get_info(ytdlp: &str, id: &str) -> Result<SingleVideo, String> {
 }
 
 #[tauri::command]
-async fn download(ytdlp: &str, id: &str, fid: &str, folder: &str) -> Result<(), String> {
+async fn download(
+    id: &str,
+    fid: &str,
+    folder: &str,
+    state: State<'_, AppState>,
+) -> Result<(), String> {
     let url = format!("https://youtube.com/watch?v={}", id);
     let _ = YoutubeDl::new(url)
-        .youtube_dl_path(ytdlp)
+        .youtube_dl_path(state.ytdlp.clone())
         .socket_timeout("15")
         .format(fid)
         .download_to(folder)
         .map_err(|e| e.to_string());
     Ok(())
-}
-
-#[tauri::command]
-async fn setup() -> Result<PathBuf, String> {
-    let path = youtube_dl::download_yt_dlp(".")
-        .await
-        .map_err(|e| e.to_string())?;
-    Ok(path)
 }
 
 #[tauri::command]
@@ -46,9 +49,25 @@ fn open_dir(folder: &str) -> Result<(), String> {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![
-            setup, get_info, download, open_dir
-        ])
+        .setup(|app| {
+            let path_resolver = app.path_resolver();
+            #[cfg(target_os = "linux")]
+            let ytdlp = path_resolver
+                .resolve_resource("yt-dlp/yt-dlp_linux")
+                .expect("Failed to get yt-dlp");
+            #[cfg(target_os = "macos")]
+            let ytdlp = path_resolver
+                .resolve_resource("yt-dlp/yt-dlp_macos")
+                .expect("Failed to get yt-dlp");
+            #[cfg(target_os = "windows")]
+            let ytdlp = path_resolver
+                .resolve_resource("yt-dlp/yt-dlp.exe")
+                .expect("Failed to get yt-dlp");
+            let state = AppState { ytdlp };
+            app.manage(state);
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![get_info, download, open_dir])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
