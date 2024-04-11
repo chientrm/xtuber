@@ -32,7 +32,7 @@ async fn download(ytdlp: &str, id: &str, fid: &str, folder: &str) -> Result<(), 
 
 #[tauri::command]
 async fn setup() -> Result<PathBuf, String> {
-    let path = youtube_dl::download_yt_dlp("yt-dlp")
+    let path = youtube_dl::download_yt_dlp(".")
         .await
         .map_err(|e| e.to_string())?;
     Ok(path)
