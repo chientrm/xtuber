@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-
+      - run: cd src-tauri && cargo bump ${{ needs.prepare.outputs.TAG }}
       - name: Setup node
         uses: actions/setup-node@v4
         with:
