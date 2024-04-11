@@ -30,7 +30,6 @@ jobs:
           fetch-depth: 0
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-      - run: cd src-tauri && cargo bump ${{ needs.prepare.outputs.TAG }}
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -49,7 +48,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
-
+      - run: cd src-tauri && cargo bump ${{ needs.prepare.outputs.TAG }}
       - name: Build and upload a GitHub release
         uses: tauri-apps/tauri-action@v0
         env:
