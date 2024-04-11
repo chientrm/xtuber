@@ -1,33 +1,64 @@
-name: 'publish'
+name: Release
 
 on:
   push:
-    branches:
-      - release
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    tags:
+      - '*'
 
 jobs:
-  build-binaries:
+  publish-tauri:
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
         with:
-          node-version: 16
-      - uses: actions-rs/toolchain@v1
+          lfs: true
+          fetch-depth: 0
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          toolchain: stable
-      - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-latest'
+          node-version: 20
+
+      - name: Setup and run pnpm install
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+
+      - name: Install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
-      - uses: JonasKruckenberg/tauri-build@v1
-        id: tauri_build
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Build and upload a GitHub release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: __VERSION__
+          releaseName: 'App v__VERSION__'
+          releaseBody: |
+            See the assets to download and install this version.
+
+            If you get a virus warning read this article: https://tauri.by.simon.hyll.nu/concepts/security/false_positives/.
+
+            Mac: Extract the .app from the .dmg and run `xattr -d com.apple.quarantine your-app.app`.
+            Windows: Run `attrib -r your-app.msi:Zone.Identifier`.
+          releaseDraft: false
+          prerelease: false
+          includeUpdaterJson: true
