@@ -31,7 +31,7 @@ jobs:
       - uses: maxgfr/github-change-json@main
         with:
           key: 'package'
-          value: { 'productName': 'XTuber', 'version': '${{ needs.prepare.outputs.TAG }}' }
+          value: { 'productName'\: 'XTuber', 'version'\: '${{ needs.prepare.outputs.TAG }}' }
           path: src-tauri/tauri.conf.json
       - run: cat src-tauri/tauri.conf.json
       - name: Install Rust
