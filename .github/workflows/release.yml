@@ -30,10 +30,9 @@ jobs:
           fetch-depth: 0
       - uses: maxgfr/github-change-json@main
         with:
-          key: 'package.version'
-          value: ${{ needs.prepare.outputs.TAG }}
+          key: 'package'
+          value: "{ 'productName': 'XTuber', 'version': '${{ needs.prepare.outputs.TAG }}' }"
           path: src-tauri/tauri.conf.json
-          commit: true
       - run: cat src-tauri/tauri.conf.json
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
