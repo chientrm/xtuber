@@ -28,7 +28,12 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-      - run: sed -i 's/"version":\s*"[^"]*"/"version":"${{ needs.prepare.outputs.TAG }}"/' src-tauri/tauri.conf.json
+      - uses: maxgfr/github-change-json@main
+        with:
+          key: 'package.version'
+          value: ${{ needs.prepare.outputs.TAG }}
+          path: src-tauri/tauri.conf.json
+          commit: true
       - run: cat src-tauri/tauri.conf.json
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
