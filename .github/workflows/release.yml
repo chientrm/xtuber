@@ -6,6 +6,13 @@ on:
       - '*'
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - id: get_tag
+        run: echo ::set-output name=TAG::${GITHUB_REF/refs\/tags\//}
+    outputs:
+      TAG: ${{ steps.get_tag.outputs.TAG }}
   publish-tauri:
     permissions:
       contents: write
@@ -20,7 +27,7 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-
+      - run: sed -i 's/"version":\s*"[^"]*"/"version":"${{ needs.prepare.outputs.TAG }}"/' src-tauri/tauri.conf.json
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
@@ -51,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: __VERSION__
-          releaseName: 'App v__VERSION__'
+          releaseName: 'XTuber __VERSION__'
           releaseBody: |
             See the assets to download and install this version.
 
