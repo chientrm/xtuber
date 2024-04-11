@@ -12,149 +12,234 @@ declare global {
 
 	namespace YouTube {
 		interface Video {
-			dashManifestUrl: null;
-			hlsManifestUrl: null;
+			abr: number;
+			acodec: Acodec;
+			age_limit: number;
+			album: null;
+			album_artist: null;
+			album_type: null;
+			alt_title: null;
+			artist: null;
+			asr: number;
+			automatic_captions: { [key: string]: AutomaticCaption[] };
+			average_rating: null;
+			categories: string[];
+			channel: string;
+			channel_id: string;
+			channel_url: string;
+			chapter: null;
+			chapter_id: null;
+			chapter_number: null;
+			chapters: Chapter[];
+			comment_count: number;
+			comments: null;
+			container: null;
+			creator: null;
+			description: string;
+			disc_number: null;
+			dislike_count: null;
+			display_id: string;
+			downloader_options: null;
+			duration: number;
+			duration_string: string;
+			end_time: null;
+			episode: null;
+			episode_id: null;
+			episode_number: null;
+			epoch: number;
+			ext: VideoEXT;
+			extractor: string;
+			extractor_key: string;
+			filesize: null;
+			filesize_approx: number;
+			format: string;
+			format_id: string;
+			format_note: string;
 			formats: Format[];
-			relatedVideos: RelatedVideo[];
-			videoDetails: VideoDetails;
+			fps: number;
+			fragment_base_url: null;
+			fragments: null;
+			genre: null;
+			heatmap: null;
+			height: number;
+			http_headers: null;
+			id: string;
+			is_live: boolean;
+			language: Language;
+			language_preference: null;
+			license: string;
+			like_count: number;
+			location: null;
+			manifest_url: null;
+			no_resume: null;
+			player_url: null;
+			playlist: null;
+			playlist_id: null;
+			playlist_index: null;
+			playlist_title: null;
+			playlist_uploader: null;
+			playlist_uploader_id: null;
+			preference: null;
+			protocol: string;
+			quality: null;
+			release_date: null;
+			release_year: null;
+			repost_count: null;
+			requested_subtitles: null;
+			resolution: string;
+			season: null;
+			season_id: null;
+			season_number: null;
+			series: null;
+			source_preference: null;
+			start_time: null;
+			stretched_ratio: null;
+			subtitles: Subtitles;
+			tags: string[];
+			tbr: number;
+			thumbnail: string;
+			thumbnails: Thumbnail[];
+			timestamp: null;
+			title: string;
+			track: null;
+			track_id: null;
+			track_number: null;
+			upload_date: string;
+			uploader: string;
+			uploader_id: string;
+			uploader_url: string;
+			url: null;
+			vbr: number;
+			vcodec: string;
+			view_count: number;
+			webpage_url: string;
+			width: number;
+		}
+
+		enum Acodec {
+			Mp4A402 = 'mp4a.40.2',
+			Mp4A405 = 'mp4a.40.5',
+			Opus = 'opus'
+		}
+
+		interface AutomaticCaption {
+			data: null;
+			ext: AutomaticCaptionEXT;
+			url: string;
+		}
+
+		enum AutomaticCaptionEXT {
+			Json3 = 'json3',
+			Srv1 = 'srv1',
+			Srv2 = 'srv2',
+			Srv3 = 'srv3',
+			Ttml = 'ttml',
+			Vtt = 'vtt'
+		}
+
+		interface Chapter {
+			end_time: number;
+			start_time: number;
+			title: string;
+		}
+
+		enum VideoEXT {
+			M4A = 'm4a',
+			Mhtml = 'mhtml',
+			Mp4 = 'mp4',
+			Webm = 'webm'
 		}
 
 		interface Format {
-			itag: number;
-			mimeType: string;
-			bitrate: number;
-			width: number | null;
-			height: number | null;
-			initRange: Range | null;
-			indexRange: Range | null;
-			lastModified: string;
-			contentLength: null | string;
-			quality: Quality;
+			abr: number | null;
+			acodec: Acodec | null;
+			asr: number | null;
+			container: Container | null;
+			downloader_options: DownloaderOptions | null;
+			ext: VideoEXT;
+			filesize: number | null;
+			filesize_approx: number | null;
+			format: string;
+			format_id: string;
+			format_note: null | string;
 			fps: number | null;
-			qualityLabel: null | string;
-			projectionType: ProjectionType;
-			averageBitrate: number | null;
-			highReplication: boolean | null;
-			audioQuality: null | string;
-			colorInfo: ColorInfo | null;
-			approxDurationMs: string;
-			audioSampleRate: null | string;
-			audioChannels: number | null;
-			audioBitrate: null;
-			loudnessDb: number | null;
+			fragment_base_url: null;
+			fragments: Fragment[] | null;
+			height: number | null;
+			http_headers: HTTPHeaders;
+			language: Language | null;
+			language_preference: number | null;
+			manifest_url: null | string;
+			no_resume: null;
+			player_url: null;
+			preference: null;
+			protocol: Protocol;
+			quality: number | null;
+			resolution: string;
+			source_preference: number | null;
+			stretched_ratio: null;
+			tbr: number | null;
 			url: string;
-			hasVideo: boolean;
-			hasAudio: boolean;
-			isLive: boolean;
-			isHLS: boolean;
-			isDashMPD: boolean;
+			vbr: number | null;
+			vcodec: null | string;
+			width: number | null;
 		}
 
-		interface ColorInfo {
-			primaries: string;
-			transferCharacteristics: string;
-			matrixCoefficients: string;
+		enum Container {
+			M4ADash = 'm4a_dash',
+			Mp4Dash = 'mp4_dash',
+			WebmDash = 'webm_dash'
 		}
 
-		interface Range {
-			start: string;
-			end: string;
+		interface DownloaderOptions {
+			http_chunk_size: number;
 		}
 
-		enum ProjectionType {
-			Rectangular = 'RECTANGULAR'
-		}
-
-		enum Quality {
-			Large = 'large',
-			Medium = 'medium',
-			Small = 'small',
-			Tiny = 'tiny'
-		}
-
-		interface RelatedVideo {
-			id: string;
+		interface Fragment {
+			duration: number;
+			filesize: null;
+			path: null;
 			url: string;
-			title: string;
-			published: string;
-			author: Author;
-			shortViewCountText: string;
-			viewCount: string;
-			lengthSeconds: string;
-			thumbnails: Thumbnail[];
-			is_live: boolean;
 		}
 
-		interface Author {
-			id: string;
-			name: string;
-			user: string;
-			channelUrl: string;
-			externalChannelUrl: string;
-			userUrl: string;
-			thumbnails: Thumbnail[];
-			verified: boolean;
-			subscriberCount: number;
+		interface HTTPHeaders {
+			Accept: Accept;
+			'Accept-Language': AcceptLanguage;
+			'Sec-Fetch-Mode': SECFetchMode;
+			'User-Agent': string;
 		}
+
+		enum Accept {
+			TextHTMLApplicationXHTMLXMLApplicationXMLQ09Q08 = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+		}
+
+		enum AcceptLanguage {
+			EnUsEnQ05 = 'en-us,en;q=0.5'
+		}
+
+		enum SECFetchMode {
+			Navigate = 'navigate'
+		}
+
+		enum Language {
+			Vi = 'vi'
+		}
+
+		enum Protocol {
+			HTTPS = 'https',
+			M3U8Native = 'm3u8_native',
+			Mhtml = 'mhtml'
+		}
+
+		interface Subtitles {}
 
 		interface Thumbnail {
-			width: number;
-			height: number;
+			filesize: null;
+			height: number | null;
+			id: string;
+			preference: number;
 			url: string;
-		}
-
-		interface VideoDetails {
-			author: Author;
-			likes: number;
-			dislikes: number;
-			ageRestricted: boolean;
-			videoUrl: string;
-			storyboards: Storyboard[];
-			chapters: any[];
-			embed: Embed;
-			title: string;
-			description: string;
-			lengthSeconds: string;
-			ownerProfileUrl: string;
-			externalChannelId: string;
-			isFamilySafe: boolean;
-			availableCountries: string[];
-			isUnlisted: boolean;
-			hasYpcMetadata: boolean;
-			viewCount: string;
-			category: string;
-			publishDate: Date;
-			ownerChannelName: string;
-			uploadDate: Date;
-			videoId: string;
-			keywords: any[];
-			channel_id: string;
-			isOwnerViewing: boolean;
-			isCrawlable: boolean;
-			allowRatings: boolean;
-			isPrivate: boolean;
-			isUnpluggedCropus: boolean;
-			isLiveContent: boolean;
-			thumbnails: Thumbnail[];
-		}
-
-		interface Embed {
-			flashSecureUrl: string;
-			flashUrl: string;
-			iframeUrl: string;
-			height: number;
-			width: number;
-		}
-
-		interface Storyboard {
-			templateUrl: string;
-			thumbnailWidth: number;
-			thumbnailHeight: number;
-			thumbnailCount: number;
-			interval: number;
-			columns: number;
-			rows: number;
-			storyboardCount: number;
+			width: number | null;
 		}
 	}
 }

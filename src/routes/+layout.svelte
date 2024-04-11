@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import icon from '$lib/icon.png';
+	import { invoke } from '@tauri-apps/api/tauri';
+	import BxDonateBlood from '~icons/bx/donate-blood';
 	import MdiEmailNewsletter from '~icons/mdi/email-newsletter';
 	import RiTwitterXFill from '~icons/ri/twitter-x-fill';
-	import BxDonateBlood from '~icons/bx/donate-blood';
 	import '../app.pcss';
+
+	const setup = invoke<string>('setup');
 </script>
 
 <div class="p-4">

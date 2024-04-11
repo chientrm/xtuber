@@ -20,6 +20,9 @@ dependencies:
   tailwind-variants:
     specifier: ^0.2.1
     version: 0.2.1(tailwindcss@3.4.3)
+  tauri-plugin-upload-api:
+    specifier: github:tauri-apps/tauri-plugin-upload#v1
+    version: github.com/tauri-apps/tauri-plugin-upload/56d958697109d854bca19050403b017c9a28b434
 
 devDependencies:
   '@iconify/json':
@@ -2289,3 +2292,11 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  github.com/tauri-apps/tauri-plugin-upload/56d958697109d854bca19050403b017c9a28b434:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-upload/tar.gz/56d958697109d854bca19050403b017c9a28b434}
+    name: tauri-plugin-upload-api
+    version: 0.0.0
+    dependencies:
+      '@tauri-apps/api': 1.5.3
+    dev: false
