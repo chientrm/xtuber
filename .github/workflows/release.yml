@@ -28,8 +28,6 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-      - run: echo "`jq '.package.version="${{ needs.prepare.outputs.TAG }}"' src-tauri/tauri.conf.json`" > src-tauri/tauri.conf.json
-      - run: cat src-tauri/tauri.conf.json
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
