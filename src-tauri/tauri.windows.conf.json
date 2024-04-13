@@ -3,7 +3,7 @@
         "bundle": {
             "resources": [
                 "yt-dlp/yt-dlp.exe",
-                "ffmpeg/ffmpeg-x86_64-apple-darwin"
+                "ffmpeg/ffmpeg-x86_64-pc-windows-msvc.exe"
             ]
         }
     }
