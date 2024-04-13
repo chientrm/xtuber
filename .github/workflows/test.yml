@@ -22,32 +22,32 @@ jobs:
         run: |
           wget https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz
           mkdir -p src-tauri/ffmpeg
-          tar -xf ffmpeg-master-latest-linux64-gpl.tar.xz -C src-tauri/ffmpeg --strip-components=1 bin/ffmpeg
-          mv src-tauri/ffmpeg/ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-unknown-linux-gnu
+          tar -xf ffmpeg-master-latest-linux64-gpl.tar.xz
+          mv ffmpeg-master-latest-linux64-gpl/bin/ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-unknown-linux-gnu
       - name: linuxarm64
         run: |
           wget https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linuxarm64-gpl.tar.xz
-          tar -xf ffmpeg-master-latest-linuxarm64-gpl.tar.xz -C src-tauri/ffmpeg --strip-components=1 bin/ffmpeg
-          mv src-tauri/ffmpeg/ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
+          tar -xf ffmpeg-master-latest-linuxarm64-gpl.tar.xz
+          mv ffmpeg-master-latest-linuxarm64-gpl/bin/ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
       - name: win64
         run: |
           wget https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip
-          tar -xf ffmpeg-master-latest-win64-gpl.zip -C src-tauri/ffmpeg --strip-components=1 bin/ffmpeg.exe
-          mv src-tauri/ffmpeg/ffmpeg.exe src-tauri/ffmpeg/ffmpeg-x86_64-windows-mvsc.exe
+          tar -xf ffmpeg-master-latest-win64-gpl.zip
+          mv ffmpeg-master-latest-win64-gpl/bin/ffmpeg.exe src-tauri/ffmpeg/ffmpeg-x86_64-windows-mvsc.exe
       - name: winarm64
         run: |
           wget https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-winarm64-gpl.zip
-          tar -xf ffmpeg-master-latest-winarm64-gpl.zip -C src-tauri/ffmpeg --strip-components=1 bin/ffmpeg.exe
-          mv src-tauri/ffmpeg/ffmpeg.exe src-tauri/ffmpeg/ffmpeg-x86_64-windows-mvsc.exe
+          tar -xf ffmpeg-master-latest-winarm64-gpl.zip
+          mv ffmpeg-master-latest-winarm64-gpl/bin/ffmpeg.exe src-tauri/ffmpeg/ffmpeg-x86_64-windows-mvsc.exe
       - name: mac64
         run: |
           wget https://www.osxexperts.net/ffmpeg7intel.zip
-          tar -xf ffmpeg7intel.zip -C src-tauri/ffmpeg --strip-components=1 ffmpeg
-          mv src-tauri/ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
+          tar -xf ffmpeg7intel.zip
+          mv ffmpeg/ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
       - name: macarm
         run: |
           wget https://www.osxexperts.net/ffmpeg7arm.zip
-          tar -xf ffmpeg7arm.zip -C src-tauri/ffmpeg --strip-components=1 ffmpeg
-          mv src-tauri/ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-apple-darwin
+          tar -xf ffmpeg7arm.zip
+          mv ffmpeg/ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-apple-darwin
       - run: chmod +x src-tauri/ffmpeg/*
       - run: ls -al src-tauri/ffmpeg
