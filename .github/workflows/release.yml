@@ -19,7 +19,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        platform:
+          [
+            macos-latest/amd64,
+            macos-latest/arm64,
+            ubuntu-20.04/amd64,
+            ubuntu-20.04/arm64,
+            windows-latest/amd64,
+            windows-latest/arm64
+          ]
 
     runs-on: ${{ matrix.platform }}
     needs: prepare
