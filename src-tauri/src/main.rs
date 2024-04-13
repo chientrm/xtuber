@@ -79,7 +79,7 @@ fn main() {
                 .expect("Failed to get ffmpeg");
             #[cfg(target_os = "windows")]
             let ffmpeg = path_resolver
-                .resolve_resource("ffmpeg/ffmpeg-x86_64-windows-mvsc.exe")
+                .resolve_resource("ffmpeg/ffmpeg-x86_64-pc-windows-msvc.exe")
                 .expect("Failed to get ffmpeg");
             let state = AppState { ytdlp, ffmpeg };
             app.manage(state);

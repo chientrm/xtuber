@@ -5,7 +5,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import icon from '$lib/icon.png';
 	import BxDonateBlood from '~icons/bx/donate-blood';
-	import MaterialSymbolsInfo from '~icons/material-symbols/info';
+	import MaterialSymbolsFeedback from '~icons/material-symbols/feedback';
 	import '../app.pcss';
 	let value = '';
 	const load = () => {
@@ -37,7 +37,7 @@
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild let:builder>
 				<Button builders={[builder]} variant="ghost">
-					<MaterialSymbolsInfo class="h-[1.2rem] w-[1.2rem]" />
+					<MaterialSymbolsFeedback class="h-[1.2rem] w-[1.2rem]" />
 					<span class="sr-only">About</span>
 				</Button>
 			</DropdownMenu.Trigger>
