@@ -69,8 +69,17 @@ fn main() {
             let ytdlp = path_resolver
                 .resolve_resource("yt-dlp/yt-dlp.exe")
                 .expect("Failed to get yt-dlp");
+            #[cfg(target_os = "linux")]
             let ffmpeg = path_resolver
-                .resolve_resource("ffmpeg")
+                .resolve_resource("ffmpeg/ffmpeg-x86_64-unknown-linux-gnu")
+                .expect("Failed to get ffmpeg");
+            #[cfg(target_os = "macos")]
+            let ffmpeg = path_resolver
+                .resolve_resource("ffmpeg/ffmpeg-x86_64-apple-darwin")
+                .expect("Failed to get ffmpeg");
+            #[cfg(target_os = "windows")]
+            let ffmpeg = path_resolver
+                .resolve_resource("ffmpeg/ffmpeg-x86_64-windows-mvsc.exe")
                 .expect("Failed to get ffmpeg");
             let state = AppState { ytdlp, ffmpeg };
             app.manage(state);

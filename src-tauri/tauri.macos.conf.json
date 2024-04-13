@@ -2,7 +2,8 @@
     "tauri": {
         "bundle": {
             "resources": [
-                "yt-dlp/yt-dlp_macos"
+                "yt-dlp/yt-dlp_macos",
+                "ffmpeg/ffmpeg-x86_64-apple-darwin"
             ]
         }
     }
