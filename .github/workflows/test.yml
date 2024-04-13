@@ -43,7 +43,7 @@ jobs:
           wget "https://www.osxexperts.net/ffmpeg7intel.zip"
           unzip ffmpeg7intel.zip
           mv ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
-          wget "https://www.osxexperts.net/ffmpeg7arm.zip"s
+          wget "https://www.osxexperts.net/ffmpeg7arm.zip"
           unzip ffmpeg7arm.zip
           mv ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-apple-darwin
       - run: chmod +x src-tauri/ffmpeg/*
