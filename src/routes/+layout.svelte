@@ -2,32 +2,40 @@
 	import { Button } from '$lib/components/ui/button';
 	import icon from '$lib/icon.png';
 	import BxDonateBlood from '~icons/bx/donate-blood';
-	import MdiEmailNewsletter from '~icons/mdi/email-newsletter';
+	import MdiGithub from '~icons/mdi/github';
 	import RiTwitterXFill from '~icons/ri/twitter-x-fill';
 	import '../app.pcss';
 </script>
 
-<div class="p-4">
-	<div class="mb-2 flex flex-row">
-		<Button variant="ghost" href="/">
-			<img src={icon} alt="" class="mr-2 h-8 w-8" /> XTuber
-		</Button>
+<header
+	class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+>
+	<div class="container flex h-14 w-full items-center">
+		<a href="/" class="mr-6 flex items-center space-x-2">
+			<img src={icon} alt="icon" class="h-6 w-6" />
+			<span class="font-bold">XTuber</span>
+		</a>
 		<div class="grow" />
-		<Button variant="outline" href="https://x.com/realchientrm" target="_blank">
-			<RiTwitterXFill class="h-4 w-4" />
-		</Button>
-		<Button variant="outline" href="https://chientrm.com" target="_blank" class="ml-2">
-			<MdiEmailNewsletter class="h-4 w-4" />
+		<Button variant="ghost" class="mr-2 w-9 px-0" href="https://x.com/realchientrm" target="_blank">
+			<RiTwitterXFill class="h-[1.2rem] w-[1.2rem]" />
+			<span class="sr-only">X</span>
 		</Button>
 		<Button
-			variant="outline"
-			href="https://www.buymeacoffee.com/chientrm"
+			variant="ghost"
+			class="mr-2 w-9 px-0"
+			href="https://github.com/chientrm/xtuber"
 			target="_blank"
-			class="ml-2"
 		>
-			<BxDonateBlood class="mr-2 h-4 w-4" />
-			Donate
+			<MdiGithub class="h-[1.2rem] w-[1.2rem]" />
+			<span class="sr-only">GitHub Repo</span>
+		</Button>
+		<Button variant="ghost" href="https://www.buymeacoffee.com/chientrm" target="_blank">
+			<BxDonateBlood class="h-[1.2rem] w-[1.2rem]" />
+			<span>Donate</span>
 		</Button>
 	</div>
+</header>
+
+<div class="p-4">
 	<slot />
 </div>
