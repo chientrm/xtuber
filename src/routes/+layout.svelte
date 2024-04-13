@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Input } from '$lib/components/ui/input';
 	import icon from '$lib/icon.png';
 	import BxDonateBlood from '~icons/bx/donate-blood';
+	import MaterialSymbolsInfo from '~icons/material-symbols/info';
 	import '../app.pcss';
 	let value = '';
 	const load = () => {
@@ -32,6 +34,18 @@
 			<BxDonateBlood class="h-[1.2rem] w-[1.2rem]" />
 			<span>Donate</span>
 		</Button>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger asChild let:builder>
+				<Button builders={[builder]} variant="ghost">
+					<MaterialSymbolsInfo class="h-[1.2rem] w-[1.2rem]" />
+					<span class="sr-only">About</span>
+				</Button>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content align="end">
+				<DropdownMenu.Item href="https://x.com/realchientrm" target="_blank">X</DropdownMenu.Item>
+				<DropdownMenu.Item href="https://github.com/chientrm/xtuber">GitHub</DropdownMenu.Item>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	</div>
 </header>
 

@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::path::PathBuf;
+use std::{path::PathBuf, process::Command};
 
 use open;
 use tauri::{Manager, State};
@@ -9,6 +9,7 @@ use youtube_dl::{SingleVideo, YoutubeDl};
 
 struct AppState {
     ytdlp: PathBuf,
+    ffmpeg: PathBuf,
 }
 
 #[tauri::command]
@@ -32,12 +33,17 @@ async fn download(
     state: State<'_, AppState>,
 ) -> Result<(), String> {
     let url = format!("https://youtube.com/watch?v={}", id);
-    let _ = YoutubeDl::new(url)
-        .youtube_dl_path(state.ytdlp.clone())
-        .socket_timeout("15")
-        .format(fid)
-        .download_to(folder)
-        .map_err(|e| e.to_string());
+    Command::new(state.ytdlp.clone())
+        .arg("--socket-timeout")
+        .arg("15")
+        .arg("-f")
+        .arg(fid)
+        .arg(url)
+        .arg("--ffmpeg-location")
+        .arg(state.ffmpeg.clone())
+        .current_dir(folder)
+        .output()
+        .expect("Failed to execute command");
     Ok(())
 }
 
@@ -63,7 +69,10 @@ fn main() {
             let ytdlp = path_resolver
                 .resolve_resource("yt-dlp/yt-dlp.exe")
                 .expect("Failed to get yt-dlp");
-            let state = AppState { ytdlp };
+            let ffmpeg = path_resolver
+                .resolve_resource("ffmpeg")
+                .expect("Failed to get ffmpeg");
+            let state = AppState { ytdlp, ffmpeg };
             app.manage(state);
             Ok(())
         })

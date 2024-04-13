@@ -1,24 +1,51 @@
 <script lang="ts">
+	import * as Table from '$lib/components/ui/table';
 	import { Button } from '$lib/components/ui/button';
-	import * as Card from '$lib/components/ui/card';
-	import MdiGithub from '~icons/mdi/github';
-	import RiTwitterXFill from '~icons/ri/twitter-x-fill';
+	import { downloads } from '$lib/downloads';
+	import MaterialSymbolsRefresh from '~icons/material-symbols/refresh';
+	import { invoke } from '@tauri-apps/api/tauri';
 </script>
 
-<Card.Root class="m-4 max-w-[480px]">
-	<Card.Header>
-		<Card.Title>XTuber</Card.Title>
-		<Card.Description>Simple YouTube Downloader.</Card.Description>
-	</Card.Header>
-	<Card.Content>
-		<Button variant="secondary" href="https://x.com/realchientrm" target="_blank">
-			<span>Profile</span>
-			<RiTwitterXFill class="ml-2 h-4 w-4" />
-		</Button>
-		<Button variant="secondary" href="https://github.com/chientrm/xtuber" target="_blank">
-			<span>GitHub</span>
-			<MdiGithub class="ml-2 h-4 w-4" />
-		</Button>
-	</Card.Content>
-	<Card.Footer class="justify-end"></Card.Footer>
-</Card.Root>
+<Table.Root>
+	<Table.Caption>Downloads.</Table.Caption>
+	<Table.Header>
+		<Table.Row>
+			<Table.Head>Thumbnail</Table.Head>
+			<Table.Head>Title</Table.Head>
+			<Table.Head>Quality</Table.Head>
+			<Table.Head>File size</Table.Head>
+			<Table.Head class="text-right">Download</Table.Head>
+		</Table.Row>
+	</Table.Header>
+	<Table.Body>
+		{#each $downloads as { video, audioFormat, videoFormat, downloaded, folder }}
+			<Table.Row>
+				<Table.Cell>
+					<img src={video.thumbnail} class="h-16 w-16 object-contain" alt="Thumbnail" />
+				</Table.Cell>
+				<Table.Cell>{video.title}</Table.Cell>
+				<Table.Cell>
+					{#if videoFormat}
+						{videoFormat.format_note}
+					{:else}
+						Audio only
+					{/if}
+				</Table.Cell>
+				<Table.Cell>
+					{audioFormat.filesize ?? 0 + (videoFormat?.filesize ?? 0)} bytes
+				</Table.Cell>
+				<Table.Cell class="text-right">
+					{#if downloaded}
+						<Button variant="secondary" on:click={() => invoke('open_dir', { folder })}>Open</Button
+						>
+					{:else}
+						<Button variant="secondary" disabled>
+							<MaterialSymbolsRefresh class="mr-2 h-4 w-4 animate-spin" />
+							Downloading...
+						</Button>
+					{/if}
+				</Table.Cell>
+			</Table.Row>
+		{/each}
+	</Table.Body>
+</Table.Root>

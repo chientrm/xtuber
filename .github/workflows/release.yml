@@ -59,12 +59,7 @@ jobs:
           tagName: __VERSION__
           releaseName: 'XTuber __VERSION__'
           releaseBody: |
-            See the assets to download and install this version.
-
-            If you get a virus warning read this article: https://tauri.by.simon.hyll.nu/concepts/security/false_positives/.
-
-            Mac: Extract the .app from the .dmg and run `xattr -d com.apple.quarantine your-app.app`.
-            Windows: Run `attrib -r your-app.msi:Zone.Identifier`.
+            New features and bug fixes.
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true

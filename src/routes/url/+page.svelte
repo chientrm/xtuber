@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Format from '$lib/components/ui/Format.svelte';
-	import * as Table from '$lib/components/ui/table';
+	import { Downloader } from '$lib/components/ui';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import { onMount } from 'svelte';
-	import { slide } from 'svelte/transition';
 	import MaterialSymbolsRefresh from '~icons/material-symbols/refresh';
 
 	let invoking: Promise<YouTube.Video>;
@@ -16,28 +14,12 @@
 </script>
 
 {#await invoking}
-	<div class="flex justify-center" transition:slide>
-		<MaterialSymbolsRefresh class="h-8 w-8 animate-spin" />
+	<div class="flex justify-center">
+		<MaterialSymbolsRefresh class="m-8 h-8 w-8 animate-spin" />
 	</div>
 {:then video}
 	{#if video}
-		<Table.Root>
-			<Table.Caption>{video.title}.</Table.Caption>
-			<Table.Header>
-				<Table.Row>
-					<Table.Head class="w-[100px]">Mimetype</Table.Head>
-					<Table.Head>File size</Table.Head>
-					<Table.Head>Video</Table.Head>
-					<Table.Head>Audio</Table.Head>
-					<Table.Head class="text-right">Download</Table.Head>
-				</Table.Row>
-			</Table.Header>
-			<Table.Body>
-				{#each video.formats as format}
-					<Format id={video.id} {format} />
-				{/each}
-			</Table.Body>
-		</Table.Root>
+		<Downloader {video} />
 	{/if}
 {:catch e}
 	<div class="text-red-400">{e}</div>
