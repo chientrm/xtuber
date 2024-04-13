@@ -75,10 +75,10 @@ jobs:
           mkdir -p src-tauri/ffmpeg
           wget https://www.osxexperts.net/ffmpeg7intel.zip
           unzip ffmpeg7intel.zip
-          mv ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
+          mv ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-unknown-linux-gnu
           wget https://www.osxexperts.net/ffmpeg7arm.zip
           unzip ffmpeg7arm.zip
-          mv ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-apple-darwin
+          mv ffmpeg src-tauri/ffmpeg/ffmpeg-arm-apple-darwin
       - run: chmod +x src-tauri/ffmpeg/*
       - name: Build and upload a GitHub release
         uses: tauri-apps/tauri-action@v0
