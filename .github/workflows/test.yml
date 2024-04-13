@@ -42,12 +42,12 @@ jobs:
       - name: mac64
         run: |
           wget https://www.osxexperts.net/ffmpeg7intel.zip
-          tar -xf ffmpeg7intel.zip
+          unzip ffmpeg7intel.zip
           mv ffmpeg/ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
       - name: macarm
         run: |
           wget https://www.osxexperts.net/ffmpeg7arm.zip
-          tar -xf ffmpeg7arm.zip
+          unzip ffmpeg7arm.zip
           mv ffmpeg/ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-apple-darwin
       - run: chmod +x src-tauri/ffmpeg/*
       - run: ls -al src-tauri/ffmpeg
