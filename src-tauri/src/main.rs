@@ -5,8 +5,13 @@ use chientrm_youtube_dl::{SingleVideo, YoutubeDl};
 use open;
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
-use std::{path::PathBuf, process::Command};
-use tauri::{Manager, State};
+use std::{
+    io::{BufRead, BufReader},
+    path::PathBuf,
+    process::{Command, Stdio},
+    thread,
+};
+use tauri::{Manager, State, Window};
 
 #[cfg(target_os = "windows")]
 const CREATE_NO_WINDOW: u32 = 0x08000000;
@@ -31,17 +36,19 @@ async fn get_info(id: &str, state: State<'_, AppState>) -> Result<SingleVideo, S
 }
 
 #[tauri::command]
-async fn download(
+fn download(
     id: &str,
     fid: &str,
     folder: &str,
+    key: &str,
     state: State<'_, AppState>,
+    window: Window,
 ) -> Result<(), String> {
     let url = format!("https://youtube.com/watch?v={}", id);
     let mut command = Command::new(&state.ytdlp);
     #[cfg(target_os = "windows")]
     command.creation_flags(CREATE_NO_WINDOW);
-    command
+    let mut child = command
         .arg("--force-overwrites")
         .arg("--socket-timeout")
         .arg("15")
@@ -50,9 +57,26 @@ async fn download(
         .arg(url)
         .arg("--ffmpeg-location")
         .arg(state.ffmpeg.clone())
+        .arg("-q")
+        .arg("--progress")
+        .arg("--no-warnings")
+        .arg("--newline")
+        .arg("--progress-template")
+        .arg(
+            "%(progress._percent_str)s of %(progress._total_bytes_str)s at %(progress._speed_str)s",
+        )
         .current_dir(folder)
-        .output()
-        .map_err(|e| format!("youtube-dl error: {}", e))?;
+        .stdout(Stdio::piped())
+        .spawn()
+        .expect("Failed to execute command");
+    let stdout = BufReader::new(child.stdout.take().unwrap());
+    let key = key.to_string();
+    thread::spawn(move || {
+        for line in stdout.lines() {
+            let _ = window.emit(&key, line.unwrap());
+        }
+        let _ = window.emit(&key, "done");
+    });
     Ok(())
 }
 

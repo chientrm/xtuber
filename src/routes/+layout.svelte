@@ -3,9 +3,10 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Input } from '$lib/components/ui/input';
-	import { downloads } from '$lib/downloads';
+	import { downloads, stopListen } from '$lib/downloads';
 	import icon from '$lib/icon.png';
 	import { getVersion } from '@tauri-apps/api/app';
+	import { onDestroy } from 'svelte';
 	import { Toaster } from 'svelte-sonner';
 	import BxDonateBlood from '~icons/bx/donate-blood';
 	import MaterialSymbolsFeedback from '~icons/material-symbols/feedback';
@@ -21,6 +22,7 @@
 			}
 		}
 	};
+	onDestroy(stopListen);
 </script>
 
 <Toaster richColors />

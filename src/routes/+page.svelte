@@ -17,12 +17,16 @@
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		{#each $downloads as { video, videoFormat, downloaded, folder }}
+		{#each $downloads as { video, videoFormat, downloaded, folder, payload }}
 			<Table.Row>
 				<Table.Cell>
 					<img src={video.thumbnail} class="h-16 w-16 object-contain" alt="Thumbnail" />
 				</Table.Cell>
-				<Table.Cell>{video.title}</Table.Cell>
+				<Table.Cell>
+					{video.title}
+					<br />
+					{payload}
+				</Table.Cell>
 				<Table.Cell>
 					{#if videoFormat}
 						{videoFormat.format_note}
