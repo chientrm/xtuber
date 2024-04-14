@@ -1,11 +1,15 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::{path::PathBuf, process::Command};
-
 use open;
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
+use std::{path::PathBuf, process::Command};
 use tauri::{Manager, State};
 use youtube_dl::{SingleVideo, YoutubeDl};
+
+#[cfg(target_os = "windows")]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 struct AppState {
     ytdlp: PathBuf,
@@ -33,7 +37,14 @@ async fn download(
     state: State<'_, AppState>,
 ) -> Result<(), String> {
     let url = format!("https://youtube.com/watch?v={}", id);
-    Command::new(state.ytdlp.clone())
+
+    #[cfg(not(target_os = "windows"))]
+    let mut command = Command::new(state.ytdlp.clone());
+
+    #[cfg(target_os = "windows")]
+    let mut command = Command::new(state.ytdlp.clone()).creation_flags(CREATE_NO_WINDOW);
+
+    command
         .arg("--force-overwrites")
         .arg("--socket-timeout")
         .arg("15")
