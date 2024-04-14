@@ -25,7 +25,7 @@
 				<Table.Cell>
 					{video.title}
 					<br />
-					{payload}
+					{payload ?? ''}
 				</Table.Cell>
 				<Table.Cell>
 					{#if videoFormat}
