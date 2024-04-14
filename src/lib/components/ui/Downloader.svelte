@@ -9,7 +9,7 @@
 
 	$: formats = Array.from(
 		video.formats
-			.filter((format) => format.protocol === 'https' && format.ext === 'webm' && !format.acodec)
+			.filter((format) => format.protocol === 'https' && format.ext === 'mp4' && !format.acodec)
 			.reduce((a, b) => {
 				const quality = b.format_note!;
 				const c = a.get(quality);

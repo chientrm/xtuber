@@ -25,7 +25,9 @@ export const download = async (
 	};
 	downloads.update((items) => [download, ...items]);
 	const { id } = video;
-	const fid = videoFormat?.format_id ? `${videoFormat.format_id}+bestaudio` : 'bestaudio';
+	const fid = videoFormat?.format_id
+		? `${videoFormat.format_id}+bestaudio[ext=m4a]`
+		: 'bestaudio[ext=m4a]';
 	toast.info(`${video.title} downloading`, {
 		action: { label: 'See downloads', onClick: () => goto('/') }
 	});
