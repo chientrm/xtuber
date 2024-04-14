@@ -39,12 +39,22 @@ async fn download(
     let url = format!("https://youtube.com/watch?v={}", id);
 
     #[cfg(not(target_os = "windows"))]
-    let mut command = Command::new(state.ytdlp.clone());
+    Command::new(state.ytdlp.clone())
+        .arg("--force-overwrites")
+        .arg("--socket-timeout")
+        .arg("15")
+        .arg("-f")
+        .arg(fid)
+        .arg(url)
+        .arg("--ffmpeg-location")
+        .arg(state.ffmpeg.clone())
+        .current_dir(folder)
+        .output()
+        .expect("Failed to execute command");
 
     #[cfg(target_os = "windows")]
-    let mut command = Command::new(state.ytdlp.clone()).creation_flags(CREATE_NO_WINDOW);
-
-    command
+    Command::new(state.ytdlp.clone())
+        .creation_flags(CREATE_NO_WINDOW)
         .arg("--force-overwrites")
         .arg("--socket-timeout")
         .arg("15")
