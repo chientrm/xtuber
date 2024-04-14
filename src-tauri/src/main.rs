@@ -20,12 +20,13 @@ struct AppState {
 async fn get_info(id: &str, state: State<'_, AppState>) -> Result<SingleVideo, String> {
     let url = format!("https://youtube.com/watch?v={}", id);
     let output = YoutubeDl::new(url)
-        .youtube_dl_path(state.ytdlp.clone())
+        .youtube_dl_path(&state.ytdlp)
         .socket_timeout("15")
         .run()
-        .map_err(|e| e.to_string())
-        .unwrap();
-    let video = output.into_single_video().ok_or("Can't get video").unwrap();
+        .map_err(|e| format!("youtube_dl error: {}", e))?;
+    let video = output
+        .into_single_video()
+        .ok_or_else(|| "Failed to get video info".to_string())?;
     Ok(video)
 }
 
@@ -37,24 +38,10 @@ async fn download(
     state: State<'_, AppState>,
 ) -> Result<(), String> {
     let url = format!("https://youtube.com/watch?v={}", id);
-
-    #[cfg(not(target_os = "windows"))]
-    Command::new(state.ytdlp.clone())
-        .arg("--force-overwrites")
-        .arg("--socket-timeout")
-        .arg("15")
-        .arg("-f")
-        .arg(fid)
-        .arg(url)
-        .arg("--ffmpeg-location")
-        .arg(state.ffmpeg.clone())
-        .current_dir(folder)
-        .output()
-        .expect("Failed to execute command");
-
+    let mut command = Command::new(&state.ytdlp);
     #[cfg(target_os = "windows")]
-    Command::new(state.ytdlp.clone())
-        .creation_flags(CREATE_NO_WINDOW)
+    command.creation_flags(CREATE_NO_WINDOW);
+    command
         .arg("--force-overwrites")
         .arg("--socket-timeout")
         .arg("15")
@@ -65,7 +52,7 @@ async fn download(
         .arg(state.ffmpeg.clone())
         .current_dir(folder)
         .output()
-        .expect("Failed to execute command");
+        .map_err(|e| format!("youtube-dl error: {}", e))?;
     Ok(())
 }
 

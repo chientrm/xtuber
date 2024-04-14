@@ -21,6 +21,6 @@
 	{#if video}
 		<Downloader {video} />
 	{/if}
-{:catch e}
-	<div class="text-red-400">{e}</div>
+{:catch _}
+	<div class="p-4 text-red-400">Invalid video</div>
 {/await}
