@@ -30,7 +30,7 @@
 </script>
 
 <div class="p-4" transition:fade>
-	<h4 class="mt-4 scroll-m-20 text-xl font-semibold tracking-tight">Downloads</h4>
+	<h4 class="scroll-m-20 text-xl font-semibold tracking-tight">Downloads</h4>
 	<div class="space-x-2 space-y-2">
 		{#each formats as format}
 			<Button variant="secondary" on:click={() => down(format)}>
@@ -45,6 +45,8 @@
 			</Button>
 		</div>
 	</div>
-	<h4 class="mt-4 text-xl font-semibold tracking-tight">{video.title}</h4>
+	<h4 class="mt-8 scroll-m-20 text-xl font-semibold tracking-tight">
+		{video.title}
+	</h4>
 	<img src={video.thumbnail} alt="thumbnail" class="rounded-md" />
 </div>

@@ -17,7 +17,7 @@ tauri-build = { version = "1.5.1", features = [] }
 [dependencies]
 open = "5.1.2"
 tauri = { version = "1.6.1", features = [ "updater", "api-all"] }
-youtube_dl = "0.9.0"
+chientrm-youtube-dl = "0.9.0"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.

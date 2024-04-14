@@ -66,10 +66,10 @@ checksum = "f538837af36e6f6a9be0faa67f9a314f8119e4e4b5867c6ab40ed60360142519"
 name = "app"
 version = "0.1.0"
 dependencies = [
+ "chientrm-youtube-dl",
  "open 5.1.2",
  "tauri",
  "tauri-build",
- "youtube_dl",
 ]
 
 [[package]]
@@ -498,6 +498,18 @@ name = "cfg_aliases"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fd16c4719339c4530435d38e511904438d07cce7950afa3718a84ac36c10e89e"
+
+[[package]]
+name = "chientrm-youtube-dl"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cc670c8ee769d0a72f1c8b4fb9ae857be3b1092fc76dfaf0e437639e29748329"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
+ "wait-timeout",
+]
 
 [[package]]
 name = "chrono"
@@ -5161,18 +5173,6 @@ checksum = "21e5a325c3cb8398ad6cf859c1135b25dd29e186679cf2da7581d9679f63b38e"
 dependencies = [
  "libc",
  "winapi",
-]
-
-[[package]]
-name = "youtube_dl"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fc791a982b545c7392ea685957d39bbac4a716667b46d72a1d4c384065205ab9"
-dependencies = [
- "log",
- "serde",
- "serde_json",
- "wait-timeout",
 ]
 
 [[package]]
