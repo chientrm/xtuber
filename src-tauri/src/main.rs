@@ -34,6 +34,7 @@ async fn download(
 ) -> Result<(), String> {
     let url = format!("https://youtube.com/watch?v={}", id);
     Command::new(state.ytdlp.clone())
+        .arg("--force-overwrites")
         .arg("--socket-timeout")
         .arg("15")
         .arg("-f")

@@ -5,7 +5,6 @@ import { writable } from 'svelte/store';
 
 interface Download {
 	video: YouTube.Video;
-	audioFormat: YouTube.Format;
 	videoFormat?: YouTube.Format;
 	downloaded: boolean;
 	folder: string;
@@ -16,21 +15,17 @@ export const downloads = writable<Download[]>([]);
 export const download = async (
 	folder: string,
 	video: YouTube.Video,
-	audioFormat: YouTube.Format,
 	videoFormat?: YouTube.Format
 ) => {
 	const download: Download = {
 		video,
-		audioFormat,
 		videoFormat,
 		downloaded: false,
 		folder
 	};
 	downloads.update((items) => [download, ...items]);
 	const { id } = video;
-	const fid = videoFormat?.format_id
-		? `${audioFormat.format_id}+${videoFormat.format_id}`
-		: audioFormat.format_id;
+	const fid = videoFormat?.format_id ? `${videoFormat.format_id}+bestaudio` : 'bestaudio';
 	toast.info(`${video.title} downloading`, {
 		action: { label: 'See downloads', onClick: () => goto('/') }
 	});

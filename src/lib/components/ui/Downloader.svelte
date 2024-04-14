@@ -7,15 +7,9 @@
 
 	export let video: YouTube.Video;
 
-	$: audioFormat = video.formats
-		.filter(
-			(format) =>
-				format.protocol === 'https' && format.ext === 'm4a' && !format.vcodec && format.abr
-		)
-		.sort((a, b) => b.abr! - a.abr!)[0];
 	$: formats = Array.from(
 		video.formats
-			.filter((format) => format.protocol === 'https' && format.ext === 'mp4' && !format.acodec)
+			.filter((format) => format.protocol === 'https' && format.ext === 'webm' && !format.acodec)
 			.reduce((a, b) => {
 				const quality = b.format_note!;
 				const c = a.get(quality);
@@ -30,7 +24,7 @@
 		const f = await open({ multiple: false, directory: true });
 		if (f) {
 			const folder = f as string;
-			download(folder, video, audioFormat, videoFormat);
+			download(folder, video, videoFormat);
 		}
 	};
 </script>

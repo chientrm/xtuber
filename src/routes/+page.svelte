@@ -13,12 +13,11 @@
 			<Table.Head>Thumbnail</Table.Head>
 			<Table.Head>Title</Table.Head>
 			<Table.Head>Quality</Table.Head>
-			<Table.Head>File size</Table.Head>
 			<Table.Head class="text-right">Download</Table.Head>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		{#each $downloads as { video, audioFormat, videoFormat, downloaded, folder }}
+		{#each $downloads as { video, videoFormat, downloaded, folder }}
 			<Table.Row>
 				<Table.Cell>
 					<img src={video.thumbnail} class="h-16 w-16 object-contain" alt="Thumbnail" />
@@ -30,9 +29,6 @@
 					{:else}
 						Audio only
 					{/if}
-				</Table.Cell>
-				<Table.Cell>
-					{audioFormat.filesize ?? 0 + (videoFormat?.filesize ?? 0)} bytes
 				</Table.Cell>
 				<Table.Cell class="text-right">
 					{#if downloaded}
