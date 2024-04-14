@@ -5,6 +5,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { downloads } from '$lib/downloads';
 	import icon from '$lib/icon.png';
+	import { getVersion } from '@tauri-apps/api/app';
 	import { Toaster } from 'svelte-sonner';
 	import BxDonateBlood from '~icons/bx/donate-blood';
 	import MaterialSymbolsFeedback from '~icons/material-symbols/feedback';
@@ -51,6 +52,14 @@
 			<DropdownMenu.Content align="end">
 				<DropdownMenu.Item href="https://x.com/realchientrm" target="_blank">X</DropdownMenu.Item>
 				<DropdownMenu.Item href="https://github.com/chientrm/xtuber">GitHub</DropdownMenu.Item>
+				<DropdownMenu.Item>
+					Version:
+					{#await getVersion()}
+						...
+					{:then version}
+						{version}
+					{/await}
+				</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
 	</div>
