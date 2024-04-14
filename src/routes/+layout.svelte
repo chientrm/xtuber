@@ -3,7 +3,9 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Input } from '$lib/components/ui/input';
+	import { downloads } from '$lib/downloads';
 	import icon from '$lib/icon.png';
+	import { Toaster } from 'svelte-sonner';
 	import BxDonateBlood from '~icons/bx/donate-blood';
 	import MaterialSymbolsFeedback from '~icons/material-symbols/feedback';
 	import '../app.pcss';
@@ -20,6 +22,8 @@
 	};
 </script>
 
+<Toaster richColors />
+
 <header
 	class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
 >
@@ -27,6 +31,9 @@
 		<a href="/" class="mr-6 flex items-center space-x-2">
 			<img src={icon} alt="icon" class="h-6 w-6" />
 			<span class="font-bold">XTuber</span>
+			<span class="rounded-full bg-blue-400 px-2 text-center text-xs text-white hover:bg-blue-500">
+				{$downloads.length}
+			</span>
 		</a>
 		<Input type="url" placeholder="https://youtube.com/..." class="grow" bind:value />
 		<Button on:click={load}>Load</Button>

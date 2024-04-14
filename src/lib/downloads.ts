@@ -1,4 +1,6 @@
+import { goto } from '$app/navigation';
 import { invoke } from '@tauri-apps/api/tauri';
+import { toast } from 'svelte-sonner';
 import { writable } from 'svelte/store';
 
 interface Download {
@@ -24,12 +26,18 @@ export const download = async (
 		downloaded: false,
 		folder
 	};
-	downloads.update((items) => [...items, download]);
+	downloads.update((items) => [download, ...items]);
 	const { id } = video;
 	const fid = videoFormat?.format_id
 		? `${audioFormat.format_id}+${videoFormat.format_id}`
 		: audioFormat.format_id;
+	toast.info(`${video.title} downloading`, {
+		action: { label: 'See downloads', onClick: () => goto('/') }
+	});
 	await invoke<string>('download', { id, fid, folder });
 	download.downloaded = true;
 	downloads.update((items) => items);
+	toast.success(`${video.title} downloaded`, {
+		action: { label: 'Open folder', onClick: () => invoke('open_dir', { folder }) }
+	});
 };

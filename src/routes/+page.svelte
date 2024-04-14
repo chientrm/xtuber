@@ -36,8 +36,9 @@
 				</Table.Cell>
 				<Table.Cell class="text-right">
 					{#if downloaded}
-						<Button variant="secondary" on:click={() => invoke('open_dir', { folder })}>Open</Button
-						>
+						<Button variant="secondary" on:click={() => invoke('open_dir', { folder })}>
+							Open folder
+						</Button>
 					{:else}
 						<Button variant="secondary" disabled>
 							<MaterialSymbolsRefresh class="mr-2 h-4 w-4 animate-spin" />
