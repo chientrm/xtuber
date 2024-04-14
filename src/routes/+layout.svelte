@@ -51,7 +51,9 @@
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Content align="end">
 				<DropdownMenu.Item href="https://x.com/realchientrm" target="_blank">X</DropdownMenu.Item>
-				<DropdownMenu.Item href="https://github.com/chientrm/xtuber">GitHub</DropdownMenu.Item>
+				<DropdownMenu.Item href="https://github.com/chientrm/xtuber" target="_blank">
+					GitHub
+				</DropdownMenu.Item>
 				<DropdownMenu.Item>
 					Version:
 					{#await getVersion()}
