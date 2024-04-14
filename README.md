@@ -1,7 +1,8 @@
 # XTuber - Simple YouTube Downloader
 
-[![Release](https://github.com/chientrm/xtuber/actions/workflows/release.yml/badge.svg)](https://github.com/chientrm/xtuber/actions/workflows/release.yml)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/chientrm/xtuber/total)
+![GitHub Release](https://img.shields.io/github/v/release/chientrm/xtuber)
 
 ![Image 3](images/3.png)
 
-[Download](https://github.com/chientrm/xtuber/releases)
+[Releases](https://github.com/chientrm/xtuber/releases)
