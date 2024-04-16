@@ -26,7 +26,7 @@ jobs:
           tar -xf ffmpeg-master-latest-linux64-gpl.tar.xz
           mv ffmpeg-master-latest-linux64-gpl/bin/ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-unknown-linux-gnu
           mkdir -p src-tauri/yt-dlp
-          wget https://github.com/yt-dlp/yt-dlp/releases/download/2024.04.09/yt-dlp_linux -O src-tauri/yt-dlp/
+          wget https://github.com/yt-dlp/yt-dlp/releases/download/2024.04.09/yt-dlp_linux -O src-tauri/yt-dlp/yt-dlp_linux
       # - name: ubuntu-20.04/arm64
       #   if: ${{ (matrix.platform == 'ubuntu-20.04/arm64') && (matrix.arch == 'arm64') }}
       #   run: |
@@ -58,7 +58,7 @@ jobs:
           unzip ffmpeg7intel.zip
           mv ffmpeg src-tauri/ffmpeg/ffmpeg-x86_64-apple-darwin
           mkdir -p src-tauri/yt-dlp
-          wget https://github.com/yt-dlp/yt-dlp/releases/download/2024.04.09/yt-dlp_macos -O src-tauri/yt-dlp/
+          wget https://github.com/yt-dlp/yt-dlp/releases/download/2024.04.09/yt-dlp_macos -O src-tauri/yt-dlp/yt-dlp_macos
       # - name: macos-latest/arm64
       #   if: ${{ (matrix.platform == 'macos-latest/arm64') && (matrix.arch == 'arm64') }}
       #   run: |
@@ -68,5 +68,5 @@ jobs:
       #     mv ffmpeg src-tauri/ffmpeg/ffmpeg-arm-unknown-linux-gnu
       - run: chmod +x src-tauri/ffmpeg/*
       - run: chmod +x src-tauri/yt-dlp/*
-      - run: ls -al src-tauri/ffmpeg
-      - run: ls -al src-tauri/yt-dlp
+      - run: ls src-tauri/ffmpeg
+      - run: ls src-tauri/yt-dlp
