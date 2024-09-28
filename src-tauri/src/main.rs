@@ -1,7 +1,6 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use chientrm_youtube_dl::{SingleVideo, YoutubeDl};
 use open;
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
@@ -12,6 +11,7 @@ use std::{
     thread,
 };
 use tauri::{Manager, State, Window};
+use youtube_dl::{SingleVideo, YoutubeDl};
 
 #[cfg(target_os = "windows")]
 const CREATE_NO_WINDOW: u32 = 0x08000000;

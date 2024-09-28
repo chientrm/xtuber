@@ -8,3 +8,12 @@
 [Releases](https://github.com/chientrm/xtuber/releases)
 
 ![Image 3](images/3.png)
+
+## Development
+
+- Install [Tauri](https://tauri.app/v1/guides/getting-started/prerequisites)
+- Download yt-dlp and ffmpeg using script:
+
+  - For MacOS: `install-macos.sh`
+  - For Linux: `install-linux.sh`
+  - For Windows: `install-windows.bat`
